@@ -1,13 +1,23 @@
 package com.epam;
 
-/**
- * Hello world!
- *
- */
-public class App 
-{
-    public static void main( String[] args )
-    {
-        System.out.println( "Hello World!" );
+import com.epam.service.ClientService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.CommandLineRunner;
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+
+@SpringBootApplication
+public class App implements CommandLineRunner {
+    @Autowired
+    private ClientService service;
+
+    public static void main( String[] args ) {
+        SpringApplication.run(App.class, args);
+    }
+
+    @Override
+    public void run(String... args) throws Exception {
+        System.out.println("\nfindAll()");
+        service.getAll().forEach(System.out::println);
     }
 }
