@@ -1,20 +1,33 @@
 package com.epam.entity;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.UUID;
+import javax.persistence.*;
+import java.util.HashSet;
+import java.util.Set;
 
+@Entity
+@Table(name = "_Order")
 public class Order {
-    private UUID id;
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "client_id", referencedColumnName = "id")
     private Client client;
-    private List<Product> products;
+
+    @OneToMany(fetch = FetchType.EAGER)
+    @JoinTable(name = "Part_Order",
+            joinColumns = @JoinColumn(name = "order_id", referencedColumnName = "id"),
+            inverseJoinColumns = @JoinColumn(name = "product_id", referencedColumnName = "id"))
+    private Set<Product> products;
     private double cost;
     private String address;
 
     public Order() {
     }
 
-    public Order(UUID id, Client client, List<Product> products, double cost, String address) {
+    public Order(Long id, Client client, Set<Product> products, double cost, String address) {
         this.id = id;
         this.client = client;
         this.products = products;
@@ -22,7 +35,7 @@ public class Order {
         this.address = address;
     }
 
-    public UUID getId() {
+    public Long getId() {
         return id;
     }
 
@@ -34,18 +47,18 @@ public class Order {
         this.client = client;
     }
 
-    public List<Product> getProducts() {
+    public Set<Product> getProducts() {
         return products;
     }
 
     public void addProduct(Product product) {
         if (this.products == null) {
-            this.products = new ArrayList<>();
+            this.products = new HashSet<>();
         }
         this.products.add(product);
     }
 
-    public void setProducts(List<Product> products) {
+    public void setProducts(Set<Product> products) {
         this.products = products;
     }
 
@@ -63,5 +76,16 @@ public class Order {
 
     public void setAddress(String address) {
         this.address = address;
+    }
+
+    @Override
+    public String toString() {
+        return "Order{" +
+                "id=" + id +
+                ", client=" + client +
+                ", products=" + products +
+                ", cost=" + cost +
+                ", address='" + address + '\'' +
+                '}';
     }
 }

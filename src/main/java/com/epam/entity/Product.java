@@ -1,22 +1,31 @@
 package com.epam.entity;
 
-import java.util.UUID;
+import javax.persistence.*;
 
+@Entity
+@Table()
 public class Product {
-    private UUID id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
     private String name;
     private double cost;
 
     public Product() {
     }
 
-    public Product(UUID id, String name, double cost) {
+    public Product(String name, double cost) {
+        this.name = name;
+        this.cost = cost;
+    }
+
+    public Product(Long id, String name, double cost) {
         this.id = id;
         this.name = name;
         this.cost = cost;
     }
 
-    public UUID getId() {
+    public Long getId() {
         return id;
     }
 
@@ -34,5 +43,14 @@ public class Product {
 
     public void setCost(double cost) {
         this.cost = cost;
+    }
+
+    @Override
+    public String toString() {
+        return "Product{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", cost=" + cost +
+                '}';
     }
 }
