@@ -1,5 +1,6 @@
 package com.epam.service;
 
+import com.epam.dto.ClientDTO;
 import com.epam.entity.Client;
 import com.epam.repository.ClientRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,9 +19,10 @@ public class ClientService {
         this.clientRepository = clientRepository;
     }
 
-    public List<Client> getAll() {
+    public List<ClientDTO> getAll() {
         Iterable<Client> queryResult = clientRepository.findAll();
         return StreamSupport.stream(queryResult.spliterator(), false)
+                .map(ClientDTO::new)
                 .collect(Collectors.toList());
     }
 }
