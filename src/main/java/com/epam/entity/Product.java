@@ -14,6 +14,10 @@ public class Product {
     public Product() {
     }
 
+    public Product(Long id) {
+        this.id = id;
+    }
+
     public Product(String name, double cost) {
         this.name = name;
         this.cost = cost;

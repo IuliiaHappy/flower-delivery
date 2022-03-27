@@ -22,7 +22,7 @@ public class ClientDTO implements Serializable {
 
     public ClientDTO(Client client) {
         if (client == null) {
-            throw new RuntimeException();
+            throw new IllegalArgumentException();
         }
         this.id = client.getId();
         this.fullName = client.getName() + " " + client.getSurname();
